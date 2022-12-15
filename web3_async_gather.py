@@ -1,6 +1,6 @@
 # Quick script to test grabbing current tick liquidity info by querying the blockchain
 from time import perf_counter
-import concurrent.futures
+import asyncio
 from web3 import Web3
 import requests
 import time
