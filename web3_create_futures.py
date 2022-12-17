@@ -17,21 +17,19 @@ def get_top_pools(top_num: int = 10) -> dict:
     :param top_num: the top top_num of pools to return
     :return: results_list containing the list of pools dictionaries
     """
-    request_query = ("{\n\tpools (orderBy: totalValueLockedETH, orderDirection: desc, first: " + str(
-        top_num) + ", skip: 4)" +
-                     """
-                     {
-                         id, 
-                         token0 { id, symbol, name, decimals}, 
-                         token1 { id, symbol, name, decimals},
-                         token0Price, 
-                         token1Price, 
-                         volumeToken0, 
-                         volumeToken1, 
-                         untrackedVolumeUSD, 
-                         liquidity
-                     }
-                 }""")
+    request_query = f"{{pools (orderBy: totalValueLockedETH, orderDirection: desc, first: {top_num}, skip: 4) \
+        {{ \
+            id, \
+            token0 {{ id, symbol, name, decimals}}, \
+            token1 {{ id, symbol, name, decimals}}, \
+            token0Price, \
+            token1Price, \
+            volumeToken0, \
+            volumeToken1, \
+            untrackedVolumeUSD, \
+            liquidity \
+        }} \
+    }}"
     req = requests.post(V3_UNISWAP_GRAPHQL_URL, json={'query': request_query})
     results_list = json.loads(req.text)
     return results_list['data']['pools']
